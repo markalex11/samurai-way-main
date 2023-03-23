@@ -1,0 +1,9 @@
+
+.header {
+    grid-area: h;
+    background-color: blanchedalmond;
+}
+
+.imglogo {
+    width: 40px;
+}
