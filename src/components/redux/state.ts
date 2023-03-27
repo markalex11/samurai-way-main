@@ -1,4 +1,7 @@
-import {renderFull} from "../../render";
+
+let renderFull = () => {
+    console.log('hi')
+}
 
 type MessageType = {
     id: number
@@ -23,6 +26,7 @@ export type PostsType = {
 
 export type ProfilePageType = {
     posts: Array<PostsType>
+    newPostText:string
 }
 
 type SidebarType = {}
@@ -36,6 +40,7 @@ export type RootStateType = {
 
 let state: RootStateType = {
     profilePage: {
+        newPostText: '',
         posts: [
             {id:1 , message:'hey, how are you' , likesCount: 12},
             {id:2 , message:'this is my first post', likesCount: 11},
@@ -61,9 +66,19 @@ let state: RootStateType = {
 
 }
 
-export const addPost = (messagePost:string) => {
-    let newPost:PostsType = {id:5, message:messagePost, likesCount:0}
-    state.profilePage.posts.push(newPost)
-    renderFull(state)
+export const addPost = () => {
+    let newPost:PostsType = {id:5, message:state.profilePage.newPostText, likesCount:0};
+    state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText = '';
+    renderFull()
 };
+
+export const updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText = newText
+    renderFull()
+}
+
+export const subscribe = (observer:()=>void) => {
+  renderFull=observer
+}
 export default state
