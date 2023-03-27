@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import state, {subscribe} from "./components/redux/state";
-import {addPost, RootStateType, updateNewPostText} from "./components/redux/state";
+import {addPost, updateNewPostText} from "./components/redux/state";
 
 
 const renderFull = () => {

@@ -8,7 +8,7 @@ import {BrowserRouter , Route} from "react-router-dom";
 import {News} from "./components/News/news"
 import {Music} from './components/Music/Music'
 import {Settings} from './components/Settings/Settings'
-import {RootStateType, updateNewPostText} from "./components/redux/state";
+import {RootStateType} from "./components/redux/state";
 type AppPropsType = {
     state:RootStateType
     addPost: ()=>void
