@@ -2,17 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import state, {subscribe} from "./components/redux/state";
-import {addPost, updateNewPostText} from "./components/redux/state";
+import store from "./components/redux/redux-store";
+import StoreContext from "./StoreContext";
+import {Provider} from "./StoreContext";
 
 
 const renderFull = () => {
     ReactDOM.render(
-        <App state={state} addPost={addPost} updateNewPostText={updateNewPostText}/>,
+        <Provider store={store}>
+        <App store={store}/>
+        </Provider>
+        ,
         document.getElementById('root')
     )
 }
 
 renderFull()
-subscribe(renderFull)
+store.subscribe(renderFull)
 
