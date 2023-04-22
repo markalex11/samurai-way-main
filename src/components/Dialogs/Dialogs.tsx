@@ -10,20 +10,18 @@ type DialogsPropsType = {
     // dispatch: (action:ActionTypes)=>void
     updateNewMessageBody: (newMessageText: string) => void
     sendMessage: () => void
-    state: DialogsPageType
-
-
+    dialogsPage: DialogsPageType
 }
 
 
 export const Dialogs = (props: DialogsPropsType) => {
 
 
-    let dialogsElements = props.state.dialogs.map((el: { name: string; id: number; }) => <DialogItem name={el.name}
+    let dialogsElements = props.dialogsPage.dialogs.map((el: { name: string; id: number; }) => <DialogItem name={el.name}
                                                                                                      id={el.id}/>)
 
 
-    let messegesElements = props.state.messages.map((el: { message: string; }) => <Message message={el.message}/>)
+    let messegesElements = props.dialogsPage.messages.map((el: { message: string; }) => <Message message={el.message}/>)
 
 
     const addMessage = () => {
@@ -44,7 +42,7 @@ export const Dialogs = (props: DialogsPropsType) => {
             </div>
             <div className={s.messages}>
                 {messegesElements}
-                <textarea onChange={onMessageChange} value={props.state.newMessage}></textarea>
+                <textarea onChange={onMessageChange} value={props.dialogsPage.newMessage}></textarea>
                 <button onClick={addMessage}>add</button>
             </div>
         </div>

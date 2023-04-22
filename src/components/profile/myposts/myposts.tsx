@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent,KeyboardEvent} from "react";
 import s from './myposts.module.css'
 import Post from "./post/post";
 import {ActionTypes, PostsType} from "../../redux/store";
@@ -30,13 +30,18 @@ function Myposts(props:MyPostsPropsType) {
         // props.dispatch(updateNewPostActionCreator(e.currentTarget.value))
         props.updateNewPostText(e.currentTarget.value)
     }
+    const onKeyDownHandler = (e:KeyboardEvent<HTMLTextAreaElement>) => {
+        if(e.key === "Enter") {
+            onAddPost()
+        }
+    }
 
     return (
         <div className={s.post_block}>
             My posts
             <div>
                 <div>
-                    <textarea onChange={onPostChange} value={props.newPostText}/>
+                    <textarea onKeyDown={onKeyDownHandler} onChange={onPostChange} value={props.newPostText}/>
                 </div>
                 <div>
                     <button onClick={onAddPost}>Add post</button>
