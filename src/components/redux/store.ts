@@ -1,5 +1,5 @@
-import {AddPostActionType, profileReducer, UpdateNewPostActionType} from "./Profile-reducer";
-import {AddMessageActionType, dialogsReducer, UpdateNewMessageActionType} from "./Dialogs-reducer";
+import { profileReducer} from "./Profile-reducer";
+import {dialogsReducer} from "./Dialogs-reducer";
 
 type MessageType = {
     id: number
@@ -11,19 +11,19 @@ type DialogsType = {
     name: string
 }
 
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessageType>
     newMessage: string
 }
 
-export type PostsType = {
+type PostsType = {
     id: number
     message: string
     likesCount: number
 }
 
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: Array<PostsType>
     newPostText: string
 }
@@ -45,8 +45,6 @@ export type StoreType = {
     getState: () => RootStateType
     dispatch: (action: any) => void
 }
-
-export type ActionTypes = AddPostActionType | UpdateNewPostActionType | UpdateNewMessageActionType | AddMessageActionType
 
 
 let store: StoreType = {
@@ -91,10 +89,10 @@ let store: StoreType = {
         return this._state
     },
 
-    dispatch(action: ActionTypes) {
+    dispatch(action: any) {
 
         this._state.profilePage = profileReducer(this._state.profilePage,action)
-        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage,action)
+        // this._state.dialogsPage = dialogsReducer(this._state.dialogsPage,action)
         // this._state.sidebar...
         this._renderFull()
 

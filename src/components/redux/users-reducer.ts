@@ -6,28 +6,28 @@ type FollowAT = {
     type: "FOLLOW",
     userId: number
 }
-
 type UnFollowAT = {
     type: "UNFOLLOW",
     userId: number
 }
-
 type SetUsersAT = {
-    type : "SET-USERS",
-    users: UserType[]
-}
-
-type InitialStateType = {
+    type: "SET-USERS"
     users: UserType[]
 }
 
 export type UserType = {
     id: number
-    photoURL: string
-    followed : boolean
+    photos: {small:string ,large : string}
+    followed: boolean
     name: string
-    status:string
-    location: {city:string, country : string}
+    status: string
+    uniqueUrlName : string
+    // location: { city: string, country: string }
+}
+
+
+type InitialStateType = {
+    users: UserType[]
 }
 
 
@@ -40,35 +40,34 @@ const initialState: InitialStateType = {
     ]
 }
 
-export const usersReducer = (state:InitialStateType = initialState , action:FollowAT|UnFollowAT|SetUsersAT): InitialStateType => {
+export const usersReducer = (state: InitialStateType = initialState, action: FollowAT | UnFollowAT | SetUsersAT): InitialStateType => {
     switch (action.type) {
         case FOLLOW :
-            return {...state,users: state.users.map(el => el.id === action.userId?{...el,followed:true}:el)}
+            return {...state, users: state.users.map(el => el.id === action.userId ? {...el, followed: true} : el)}
         case UNFOLLOW :
-            return {...state,users: state.users.map(el => el.id === action.userId?{...el,followed:false}:el)}
-        case "SET-USERS":
-            return {...state,users:[...state.users,...action.users]}
+            return {...state, users: state.users.map(el => el.id === action.userId ? {...el, followed: false} : el)}
+        case SET_USERS:
+            return {...state, users: [...state.users, ...action.users]}
         default :
             return state
     }
 }
 
-export const followAC = (userId:number):FollowAT => {
+export const followAC = (userId: number): FollowAT => {
     return {
-        type:FOLLOW,
+        type: FOLLOW,
         userId: userId
     }
 }
-export const unFollowAC = (userId:number):UnFollowAT => {
+export const unFollowAC = (userId: number): UnFollowAT => {
     return {
-        type:UNFOLLOW,
+        type: UNFOLLOW,
         userId: userId
     }
 }
-export const setUsersAC = (users:UserType[]) => {
+export const setUsersAC = (users: UserType[]): SetUsersAT => {
     return {
-        type : SET_USERS,
+        type: SET_USERS,
         users: users
-
     }
 }
