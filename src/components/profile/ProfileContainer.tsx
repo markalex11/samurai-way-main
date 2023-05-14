@@ -12,9 +12,7 @@ import {RouteComponentProps, withRouter} from "react-router-dom";
 class ProfileApiContainer extends React.Component<PropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
-        debugger
         if(!userId){
-            debugger
             userId = "2"
         }
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/` + userId)

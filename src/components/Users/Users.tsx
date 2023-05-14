@@ -3,6 +3,7 @@ import userPhoto from "../../assets/images/user.png";
 import {UserType} from "../redux/users-reducer";
 import Preloader from '../common/Preloader/Preloader';
 import {NavLink} from "react-router-dom";
+import {usersApi} from "../../api/Api";
 
 type PropsType = {
     totalUsersCount: number
@@ -13,6 +14,8 @@ type PropsType = {
     unFollow: (usurId:number) => void
     follow: (usurId:number) => void
     isFetching: boolean
+    toggleIsFollowingProgress: (userId: number, isProgress: boolean) => void
+    isFollowingProgress: number[]
 }
 
 export const Users = (props:PropsType) => {
@@ -39,9 +42,35 @@ export const Users = (props:PropsType) => {
                         </NavLink>
                         {
                             u.followed
-                                ? <button onClick={() => props.unFollow(u.id)}
-                                          style={{maxHeight: "150px", maxWidth: "150px"}}>Unfollow</button>
-                                : <button onClick={() => props.follow(u.id)}
+                                ? <button  disabled={props.isFollowingProgress.some( id => id === u.id )} onClick={() => {
+                                        props.toggleIsFollowingProgress(u.id,true)
+                                        usersApi.unfollowUser(u.id).then(response => {
+                                            if(response.data.resultCode === 0){
+                                                props.unFollow(u.id)
+                                                props.toggleIsFollowingProgress(u.id,false)
+                                            }
+
+                                        })
+
+
+
+                                } }
+                                          style={props.isFollowingProgress
+                                              ?{maxHeight: "150px", maxWidth: "150px"}
+                                              :{maxHeight: "150px", maxWidth: "150px"}
+                                }>
+                                    Unfollow</button>
+                                : <button disabled={props.isFollowingProgress.some( id => id === u.id )} onClick={() => {
+                                    props.toggleIsFollowingProgress(u.id,true)
+                                        usersApi.followUser(u.id).then(response => {
+                                            if(response.data.resultCode === 0){
+                                                props.follow(u.id)
+                                                props.toggleIsFollowingProgress(u.id,false)
+                                            }
+
+                                        })
+
+                                } }
                                           style={{maxHeight: "150px", maxWidth: "150px"}}>follow</button>
                         }
                     </div>
